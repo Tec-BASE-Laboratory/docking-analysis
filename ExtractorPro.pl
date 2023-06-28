@@ -2,7 +2,7 @@
 
 ##########
 # This script must extract the distances of each kind of interaction 
-# between a ligand and a receptor to a csv file.
+# between a ligand and a receptor to a tsv file.
 ##########
 
 #! /usr/bin/perl
@@ -16,27 +16,29 @@ use File::Spec::Functions 'catfile';
 use MdmDiscoveryScript;
 use ProteinDiscoveryScript;
 
-# Define your own paths and file
+# Define your own paths to your job folder
 #########################
-my $main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/";
-#########################
-opendir(my $dh, $main_folder) or die "Failed to open directory: $!";
-my @folder_names = grep { /^Crot_/ && -d "$main_folder/$_" } readdir($dh);
-closedir($dh);
+my $main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/Corrida280623/";
+# List of folder names to process
+my @job_folders = (
+    'GLP1R_5NX2_A/cluspro.968080/',
+    'GLP1R_5NX2_R/cluspro.968081/',
+    'GLP1R_7RBT_A/cluspro.968082/',
+    'GLP1R_7RBT_R/cluspro.968083/'
+);
 
-print "The following crystals will be processed: " . join(", ", @folder_names) . "\n";
+# Loop over the each job folder
+foreach my $job_folder (@job_folders) {
+    #########################
 
-foreach my $folder_name (@folder_names) {
-    my $inputPath = "$main_folder/$folder_name/";
-    opendir(my $dh, $inputPath) or die "Failed to open directory: $!";
-    my @next_level = grep { -d "$inputPath/$_" } readdir($dh);
-    closedir($dh);
+    my $inputPath = $main_folder.$job_folder."chimera_output/";
+    my $outputPath = $main_folder.$job_folder."interactions/";
 
-    my $base_input_path = $inputPath."/".$next_level[0];
-    $inputPath = $base_input_path."/chimera_output";
-    my $outputPath = $base_input_path."/interactions";
+    #########################
 
-    print "Working with folder: $inputPath\n";
+
+    print "Processing job: ".$job_folder. "\n";
+        
     # Check that input and output directories exist
     unless (-d $inputPath) {
         die "Input directory '$inputPath' does not exist";
@@ -56,7 +58,7 @@ foreach my $folder_name (@folder_names) {
         next unless ($filename =~ /\.pdb$/i);  # Skip files that don't end with .pdb (case-insensitive)
         
         my $fullInputName = catfile($inputPath, $filename);
-        print "Opening file: $fullInputName\n";
+        printf "Opening file: %s \n",$fullInputName;
 
         # Open MDM document in Molecule Window
         my $document = DiscoveryScript::Open(
@@ -154,9 +156,15 @@ foreach my $folder_name (@folder_names) {
         
         # Close document
         $document->Close();
-    }
-    print "\nDone";
+
+        printf "\nDone with model: %s\n",$filename;
+        }
+    
+    printf "Results saved to: %s\n", $outputPath;
+    
 }
+
+print "Finished"
 
 
 
