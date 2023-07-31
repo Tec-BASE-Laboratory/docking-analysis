@@ -1,15 +1,14 @@
-# Save cluspro output in chimera
-# This code must be runned within chimera environment with '''chimera --nogui save_all.py'''
+# Fit an atomic model in a map and save new coordinates and map to files.
 import os
 from chimera import runCommand as run, openModels
 #Define input and output paths
 
-main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/"
+main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/Corrida260623"
 
-folder_names = [folder_name for folder_name in os.listdir(main_folder) if folder_name.startswith("Crot_")]
+folder_names = [folder_name for folder_name in os.listdir(main_folder) if folder_name.startswith("GLP1R_")]
 print("The folowing cristals will be processed:",str(folder_names))
 for folder_name in folder_names:
-    input_path = "/home/raquel/Documents/corelabs/venenos/cluspro/"+folder_name+"/"
+    input_path = main_folder+"/"+folder_name+"/"
     next_level = [fn for fn in os.listdir(input_path) if os.path.isdir(os.path.join(input_path, fn))]
     input_path = os.path.join(input_path, next_level[0])
     output_path = os.path.join(input_path,"chimera_output/")
