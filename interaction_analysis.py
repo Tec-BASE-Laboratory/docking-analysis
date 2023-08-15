@@ -1,4 +1,4 @@
-# Analyse interactions from each model
+# Count interactions from each model
 
 # Import libraries
 import pandas as pd
@@ -9,12 +9,13 @@ import os
 ############ Change to your own paths ####################
 
 main_dir = "/home/raquel/Documents/corelabs/venenos" 
+corrida = "Corrida150823"
 
 #####################################################
 
-def process_interactions(jobname, location=main_dir):
+def process_interactions(jobname, location=main_dir,corrida=corrida):
     # Change directory to corresponding working folder
-    input_dir = os.path.join(location,"cluspro")
+    input_dir = os.path.join(location,"cluspro",corrida)
     output_dir = os.path.join(location, "interactions")
     input_dir = os.path.join(input_dir, jobname)
     next_level = [fn for fn in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, fn))]    
@@ -27,7 +28,9 @@ def process_interactions(jobname, location=main_dir):
         docking_mode = "Restricted"
     else: 
         docking_mode = "Unspecified" #Not corresponding format is saved as unspecified
+    receptor_name = jobname.split("_")[0]
     receptorPDB = jobname.split("_")[1]
+    print("Working with receptor:",receptor_name, receptorPDB)
     #print("Working with-->\nReceptor PDB:\t",str(receptorPDB), "\nDocking mode:\t", docking_mode, "interactions\nJobID:\t\t",str(jobID))
     # Define output name
     # output_name = "Cristal_JobID_analysis.csv"
@@ -44,7 +47,7 @@ def process_interactions(jobname, location=main_dir):
 
     # Create global Dataframe to save results here
     global globaldf
-    globaldf=pd.DataFrame({"ReceptorPDB":[],"JobID":[],"ModelType":[], "Cluster" : [],"Members":[], "Score":[], "Hydrogen Bond;Electrostatic":[], "Electrostatic":[], "Hydrogen Bond":[],"Hydrophobic":[],"Other":[],"Unfavorable":[]})
+    globaldf=pd.DataFrame({"Receptor":[],"ReceptorPDB":[],"JobID":[],"ModelType":[], "Cluster" : [],"Members":[], "Score":[], "Hydrogen Bond;Electrostatic":[], "Electrostatic":[], "Hydrogen Bond":[],"Hydrophobic":[],"Other":[],"Unfavorable":[]})
     globaldf.head()
     
     file_names = [fn for fn in os.listdir(input_dir) if fn.endswith(".tsv")]
@@ -79,17 +82,17 @@ def process_interactions(jobname, location=main_dir):
         #print("\nCleaning same-to-same-molecule-interactions\n")
         clean_data = data[data["From"].str[:1]!=data["To"].str[:1]]
         #print("Original number of interactions:\t\t", len(data))
-        #print("Discarded by same-to-same-molecule-interaction:\t", len(data)-len(clean_data))
+        print("Discarded by same-to-same-molecule-interaction:\t", len(data)-len(clean_data))
         #print("Current number of interactions:\t\t\t", len(clean_data))
-        clean_data.head()
-        #Count interactions
-        interactions_count = clean_data["Category"].value_counts()
+        #clean_data.head()
+       #Count interactions
+        interactions_count = clean_data["Category"].value_counts() #using data instead of clean_data
         # Creating result data row
-        identifier = pd.Series({"ReceptorPDB":receptorPDB,"JobID":jobID, "ModelType":modeltype,"Cluster":cluster})
+        identifier = pd.Series({"Receptor":receptor_name,"ReceptorPDB":receptorPDB,"JobID":jobID, "ModelType":modeltype,"Cluster":cluster})
         interactions_count.reset_index(drop=True)
         
         # Open corresponding score file
-        score_location = os.path.join(location,'cluspro',jobname)
+        score_location = os.path.join(location,'cluspro',corrida,jobname)
         score_files = [fn for fn in os.listdir(score_location) if fn.endswith(".csv") and fn.startswith("cluspro_scores.")]
         corresponding_score_file = [item for item in score_files if item.split(".")[2] == modeltype][0]
         df_scores = pd.read_csv(os.path.join(score_location,corresponding_score_file))
@@ -101,19 +104,25 @@ def process_interactions(jobname, location=main_dir):
         cluspro_scores = pd.Series({"Members":members,"Score":score})
         
         # Create row with all data
-        new_row = pd.concat([identifier,cluspro_scores, interactions_count])
-        #print("\nResults:\n",new_row)
+        new_row = pd.concat([identifier,interactions_count, cluspro_scores])
+        print("\nResults:\n",new_row)
         # Append results to global Dataframe
         globaldf.loc[len(globaldf)]= new_row
         globaldf.head()
         #print('Interaction count saved to "globaldf"')
               
     print('Done')
+    globaldf.fillna(0,inplace=True)
+    globaldf["Tot_Electrostatic"]= globaldf["Electrostatic"] + globaldf["Hydrogen Bond;Electrostatic"]
+    globaldf["Tot_Hydrogen Bond"] = globaldf["Hydrogen Bond"] + globaldf["Hydrogen Bond;Electrostatic"]
+    # Save only desired columns in desired order
+    globaldf = globaldf[["Receptor","ReceptorPDB","JobID","ModelType", "Cluster","Members", "Score", "Tot_Electrostatic", "Tot_Hydrogen Bond","Hydrophobic","Other","Unfavorable"]]
     sorted_df = globaldf.sort_values(by=['ModelType', 'Cluster'], ascending=True)
     # Save results to a csv file
     sorted_df.to_csv(output_path,index=False)
     print("Results saved at:", output_path, "\n\n")
 #Run analysis for each Job
-receptor_list = [fn for fn in os.listdir(os.path.join(main_dir,"cluspro")) if fn.startswith("Crot_")]
+receptor_list = [fn for fn in os.listdir(os.path.join(main_dir,"cluspro",corrida)) ]
 print("The folowing cristals will be processed:",str(receptor_list))
 for receptor in receptor_list: process_interactions(receptor)
+#process_interactions("GLP1R_5NX2_A")
