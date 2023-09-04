@@ -7,7 +7,7 @@ This includes a zip file (example: `cluspro.961006.tar.bz2`), and 4 score files 
 ### 2. Move files to a new folder with its corresponding job name
 For crotamine dockings with receptor crystals, we are using "receptorkey_"+receptorPDB+docking_mode (example folder: ./cluspro/Corrida040723/AMYR_7TYF_R)
 ### 3. Extract tar.bz2 files in place
-It was done manually for each job (If you hava a script that does this is well recieved)
+It was done manually for each job (If you have a script that does this is well recieved)
 ### 4. save_all.py
 It's a python code that needs to be run within chimera environment, so the command for launching from the terminal is 
 ```chimera --nogui save_all.py ```
