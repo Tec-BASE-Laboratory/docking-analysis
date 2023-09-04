@@ -15,7 +15,7 @@ It will create a directory in `./cluspro/Corrida######/jobname/clusproID/chimera
 ### 5. extract_interactions.pl
 This is an API integration script that opens each pdb docking file, select the ligand (in this case, selects specifically for crotamine as it is 42 residues long), and the rest of the molecules are considered as receptor. Then receptor-ligand interactions are calculated and the results are saved to a tsv file in the folder `./cluspro/Corrida######/jobname/clusproID/interactions`
 When running several jobs, a list of job paths can be defined in line 19 (within @job_folders variable).
-### 6. interaction_analysis.py
+### 6. analyse_interactions.py
 This code can be run directy in the terminal with `python interaction_analysis.py`
 It will create a new folder in `./interactions` (do not confuse with "./cluspro/jobname/clusproID/interactions")
 Each job will have a final output called "JobName_JobID_analysis.csv" (example `AMYR_7TYF_R_969022_analysis.csv`)
