@@ -5,7 +5,7 @@ import os
 from chimera import runCommand as run, openModels
 
 # 2. Define working folder
-main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/Corrida210823_"
+main_folder = "./cluspro/Corrida210823_"
 
 # 3. Select all dockings to work with
 folder_names = [folder_name for folder_name in os.listdir(main_folder)]
