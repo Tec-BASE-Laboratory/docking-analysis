@@ -9,7 +9,7 @@ import os
 # 2. Define path variables for opening tsv files
 ############ Change to your own paths ####################
 
-main_dir = "/home/raquel/Documents/corelabs/venenos" 
+main_dir = "./" 
 corrida = "Corrida210823_" # several jobs in the same folder can be executed.
 
 #####################################################
