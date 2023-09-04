@@ -5,7 +5,7 @@ This repository holds series of code which can be used to perform analysis of do
 ### 1. Download all files from cluspro results
 This includes a zip file (example: `cluspro.961006.tar.bz2`), and 4 score files (example: `cluspro_scores.961006.002.csv`)
 ### 2. Move files to a new folder with its corresponding job name
-For crotamine dockings with receptor crystals, we are using "receptorkey_"+receptorPDB+docking_mode (example folder: ./cluspro/Corrida040723/AMYR_7TYF_R)
+For crotamine dockings with receptor crystals, we are using receptorkey+receptorPDB+docking_mode (example folder: ./cluspro/Corrida040723/AMYR_7TYF_R)
 ### 3. Extract tar.bz2 files in place
 It was done manually for each job (If you have a script that does this is well recieved)
 ### 4. save_all.py
