@@ -13,7 +13,7 @@ use MdmDiscoveryScript;
 use ProteinDiscoveryScript;
 
 # 2. Define your own path to your main folder
-my $main_folder = "/home/raquel/Documents/corelabs/venenos/cluspro/Corrida210823/";
+my $main_folder = "./cluspro/Corrida210823/";
 
 # 3. Define a list with all desired dockings
 my @job_folders = (
