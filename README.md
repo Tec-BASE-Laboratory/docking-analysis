@@ -1,5 +1,5 @@
 # docking-analysis
-This repository holds series of code which can be used to perform analysis of dockings obtained from cluspro. The main goal is to extract the non-bond interactions by type of each docking to have more features that can increase resolution while filtering results.
+Objective: perform analysis of dockings obtained from <a href= https://cluspro.org/login.php>Cluspro</a>. The main goal is to extract the non-bond interactions by type of each docking to have more features that can increase resolution while filtering results.
 
 ## Instructions for usage
 ### 1. Download all files from cluspro results
