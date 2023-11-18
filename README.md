@@ -24,19 +24,37 @@ This includes a zip file (example: `cluspro.961006.tar.bz2`), and 4 score files 
 ### 2. Move files to a new folder with its corresponding job name
 For crotamine dockings with receptor crystals, we are using receptorkey+receptorPDB+docking_mode (example folder: ./cluspro/Corrida040723/AMYR_7TYF_R)
 ### 3. Extract tar.bz2 files in place
-It was done manually for each job (If you have a script that does this is well recieved)
-### 4. save_all.py
-It's a python code that needs to be run within chimera environment, so the command for launching from the terminal is 
+It was doing it manually for each job but it can be automated
+### 4. Run `save_all.py`
+It's a python code that needs to be run within chimera environment, so the command for launching from the Unix-based terminal is 
+
 ```chimera --nogui save_all.py ```
-It will create a directory in `./cluspro/Corrida######/jobname/clusproID/chimera_output` with all processed pdb files. It is nessesary to run this step because Discovery Studio can not read directly the pdb files from cluspro.
-### 5. extract_interactions.pl
+
+It will create a directory in `./cluspro/Corrida######/jobname/clusproID/chimera_output` with all processed pdb files. 
+This step is nessesary because Discovery Studio can not read directly the pdb files from cluspro.
+
+### 5. Run `extract_interactions.pl`
 This is an API integration script that opens each pdb docking file, select the ligand (in this case, selects specifically for crotamine as it is 42 residues long), and the rest of the molecules are considered as receptor. Then receptor-ligand interactions are calculated and the results are saved to a tsv file in the folder `./cluspro/Corrida######/jobname/clusproID/interactions`
 When running several jobs, a list of job paths can be defined in line 19 (within @job_folders variable).
-### 6. analyse_interactions.py
-This code can be run directy in the terminal with `python interaction_analysis.py`
+
+1. Open BIOVA DSV
+2. Click on `New` tab and select `New Script Window`
+3. Copy all the code from `extract_interactions.pl` and paste it in the script window
+4. Update paths for your own jobs
+5. Click run and wait (must take around 5 seconds per model or one minute per job)
+
+
+### 6. Run `analyse_interactions.py`
+This code can be run directy in the terminal with 
+
+```python interaction_analysis.py```
+
 It will create a new folder in `./interactions` (do not confuse with "./cluspro/jobname/clusproID/interactions")
 Each job will have a final output called "JobName_JobID_analysis.csv" (example `AMYR_7TYF_R_969022_analysis.csv`)
 It contains the extracted scores values, members and the count for each model's number of interactions by type
+
+
+______
 
 If you have ways to improve this code or need more information to properly run it, please <a href="mailto:raquel.cossior@gmail.com">send me an email</a>
 
@@ -45,3 +63,4 @@ Hope it is useful,
 Raquel Cossío
 
 A biotechnology engineer interested in bioinformatics
+______
