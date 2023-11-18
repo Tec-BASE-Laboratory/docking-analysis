@@ -43,6 +43,9 @@ When running several jobs, a list of job paths can be defined in line 19 (within
 4. Update paths for your own jobs
 5. Click run and wait (must take around 5 seconds per model or one minute per job)
 
+Here is an example of how it looks when it's running:
+<img title="DSV Usage" alt="Screenshot of the perl code running in DSV" src="dsv_usage.png">
+
 
 ### 6. Run `analyse_interactions.py`
 This code can be run directy in the terminal with 
