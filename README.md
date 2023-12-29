@@ -7,12 +7,12 @@ Before we continue, we need to look at the **main pipeline** of actions for each
 
 1. The results are downloaded from cluspro and extracted into a dedicated folder.
 2. All models (or poses) must be opened in UCSF Chimera and inmediately saved to correct the format in the pdf files
-3. We can then open the models in BIOVA Discovery Studio Visualizer (DSV) to start the analysis.
-5. We select the ligand and the receptor to display their interactions.
-6. We save the results in a tsv (tab separated values) table
+3. Open the models in BIOVA Discovery Studio Visualizer (DSV) to start the analysis.
+5. Select the ligand and the receptor to display their interactions.
+6. Save the results in a tsv (tab separated values) table
 7. Interactions are grouped by type and counted
-8. Finally, our results are merged with the cluspro results and saved in a csv table.
-9. Then we can properly perform our desired analysis to select the best poses
+8. Finally, results are merged with the cluspro results and saved in a csv table.
+9. Perform our desired analysis to select the best poses
 
 
 > Please make sure you have <a href="https://www.cgl.ucsf.edu/chimera/download.html">UCSF Chimera</a> and <a href="https://discover.3ds.com/discovery-studio-visualizer-download">BIOVA Discovery Studio Visualizer</a> installed before proceeding.
