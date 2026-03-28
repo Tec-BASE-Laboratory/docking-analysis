@@ -23,12 +23,23 @@ Before we continue, we need to look at the **main pipeline** of actions for each
 
 
 ## Instructions for usage
-### 1. Download all files from cluspro results
-This includes a zip file (example: `cluspro.961006.tar.bz2`), and 4 score files (example: `cluspro_scores.961006.002.csv`)
-### 2. Move files to a new folder with its corresponding job name
-For crotamine dockings with receptor crystals, we are using receptorkey+receptorPDB+docking_mode (example folder: ./cluspro/Corrida040723/AMYR_7TYF_R)
-### 3. Extract tar.bz2 files in place
-It was doing it manually for each job but it can be automated
+### 1. Download all files from cluspro results using `download_jobs.ipynb`
+You can do it manually or automatically with the `download_jobs.ipynb`. You only need to change the path to your job list and update the cookie key that you get by opening ClusPro in your browser: Press `F12` to inspect window, go to `Storage`>`Cookies` and copy the value of your `PHPSESSID` cookie. This will download the .tat.bz2 file, uncompress it, and download the 4 models scores files available. Your download folder will have this structure:
+
+```
+.
+├── cluspro_downloads
+│   └── job_1410659
+│       ├── cluspro.1410659
+│       │   └── cluspro.1410659
+│       │       ├── model.000.00.pdb
+│       │       ├── ...
+│       ├── cluspro.1410659.tar.bz2
+│       ├── cluspro_scores.1410659.000.csv
+│       ├── ...
+│   └── job_1410660
+│       ...
+```
 ### 4. Run `save_all.py`
 It's a python code that needs to be run within chimera environment, so the command for launching from the Unix-based terminal is 
 
@@ -42,7 +53,7 @@ This is an API integration script that opens each pdb docking file, select the l
 When running several jobs, a list of job paths can be defined in line 19 (within @job_folders variable).
 
 1. Open BIOVA DSV
-2. Click on `New` tab and select `New Script Window`
+2. Click on `File`>`New` and select `New Script Window`
 3. Copy all the code from `extract_interactions.pl` and paste it in the script window
 4. Update paths for your own jobs
 5. Click run and wait (must take around 5 seconds per model or one minute per job)

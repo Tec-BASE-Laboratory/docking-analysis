@@ -13,7 +13,7 @@ use MdmDiscoveryScript;
 use ProteinDiscoveryScript;
 
 # 2. Define your own path to your main folder
-my $main_folder = "./cluspro/Corrida210823/";
+my $main_folder = "./cluspro_downloads";
 
 # 3. Define a list with all desired dockings
 my @job_folders = (
@@ -87,7 +87,7 @@ foreach my $job_folder (@job_folders) {
         {
             print $molecule->Name . "\n";
             # Check if this molecule is crotamine
-            if($molecule->Residues->Count == 42){
+            if($molecule->Residues->Count == 42){ # Change accordingly to your protein
                 my $ligandgroup = $molecule->Children;
                 $ligand = @$ligandgroup[1];
             }
