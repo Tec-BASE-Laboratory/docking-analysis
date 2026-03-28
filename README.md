@@ -42,7 +42,7 @@ This will download the .tat.bz2 file, uncompress it, and download the 4 models s
 │   └── job_1410660
 │       ...
 ```
-### 4. Run `save_all.py`
+### 2. Run `save_all.py`
 It's a python code that needs to be run within chimera environment, so the command for launching from the Unix-based terminal is 
 
 ```chimera --nogui save_all.py ```
@@ -50,7 +50,7 @@ It's a python code that needs to be run within chimera environment, so the comma
 It will create a directory in `./cluspro/Corrida######/jobname/clusproID/chimera_output` with all processed pdb files. 
 This step is nessesary because Discovery Studio can not read directly the pdb files from cluspro.
 
-### 5. Run `extract_interactions.pl`
+### 3. Run `extract_interactions.pl`
 This is an API integration script that opens each pdb docking file, select the ligand (in this case, selects specifically for crotamine as it is 42 residues long), and the rest of the molecules are considered as receptor. Then receptor-ligand interactions are calculated and the results are saved to a tsv file in the folder `./cluspro/Corrida######/jobname/clusproID/interactions`
 When running several jobs, a list of job paths can be defined in line 19 (within @job_folders variable).
 
@@ -64,7 +64,7 @@ Here is an example of how it looks when it's running:
 <img title="DSV Usage" alt="Screenshot of the perl code running in DSV" src="dsv_usage.png">
 
 
-### 6. Run `analyse_interactions.py`
+### 4. Run `analyse_interactions.py`
 This code can be run directy in the terminal with 
 
 ```python interaction_analysis.py```
@@ -81,6 +81,4 @@ If you have ways to improve this code or need more information to properly run i
 Hope it is useful,
 
 Raquel Cossío
-
-A Biotechnology Engineer interested in Bioinformatics
 ______
