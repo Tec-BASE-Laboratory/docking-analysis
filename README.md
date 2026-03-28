@@ -24,7 +24,9 @@ Before we continue, we need to look at the **main pipeline** of actions for each
 
 ## Instructions for usage
 ### 1. Download all files from cluspro results using `download_jobs.ipynb`
-You can do it manually or automatically with the `download_jobs.ipynb`. You only need to change the path to your job list and update the cookie key that you get by opening ClusPro in your browser: Press `F12` to inspect window, go to `Storage`>`Cookies` and copy the value of your `PHPSESSID` cookie. This will download the .tat.bz2 file, uncompress it, and download the 4 models scores files available. Your download folder will have this structure:
+You can do it manually or automatically with the `download_jobs.ipynb`. You only need to change the path to your job list and update the cookie key that you get by opening ClusPro in your browser: Press `F12` to inspect window, go to `Storage`>`Cookies` and copy the value of your `PHPSESSID` cookie. <img title="Get Cookie in Web Browser" alt="Get Cookie in Web Browser" src="cookie_instructions.png">
+
+This will download the .tat.bz2 file, uncompress it, and download the 4 models scores files available. Your download folder will have this structure:
 
 ```
 .
